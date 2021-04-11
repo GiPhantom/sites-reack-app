@@ -14,6 +14,8 @@ variables:
 install_dependencies:
   image: node:14.15.0-stretch
   stage: build
+  tags:
+    - stagshell
   script:
     - yarn install
     - yarn build
@@ -50,6 +52,8 @@ deploy_staging:
 
 deploy_prod:
   stage: deploy
+  tags:
+    - stagshell
   script:
     - cp -r build_$env $docker_html_path/test-app/${env}_$CI_COMMIT_SHA
    # - cp -Pv $docker_html_path/$deploy_subfolder $docker_html_path/test-app/${env}_$CI_COMMIT_SHA/prev-version || true
@@ -69,6 +73,8 @@ activate_staging:
 
 activate_prod:
   stage: deploy
+  tags:
+    - stagshell
   script:
     - ln -fsnv /var/www/test-app/${env}_$CI_COMMIT_SHA $docker_html_path/$deploy_subfolder
   when: manual
@@ -87,8 +93,8 @@ activate_prod:
 
 revert:
   stage: revert
-#  tags:
-#    - stagshell
+  tags:
+    - stagshell
   when: manual
   script:
     - rm -rf $docker_html_path/$deploy_subfolder
@@ -100,8 +106,8 @@ revert:
 #two revert
 revert_previous:
   stage: revert
-#  tags:
-#    - stagshell
+  tags:
+    - stagshell
   when: manual
   script:
     - rm -rf $docker_html_path/$deploy_subfolder
