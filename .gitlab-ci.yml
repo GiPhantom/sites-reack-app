@@ -87,8 +87,8 @@ activate_prod:
 
 revert:
   stage: revert
-  tags:
-    - stagshell
+#  tags:
+#    - stagshell
   when: manual
   script:
     - rm -rf $docker_html_path/$deploy_subfolder
@@ -100,8 +100,8 @@ revert:
 #two revert
 revert_previous:
   stage: revert
-  tags:
-    - stagshell
+#  tags:
+#    - stagshell
   when: manual
   script:
     - rm -rf $docker_html_path/$deploy_subfolder
